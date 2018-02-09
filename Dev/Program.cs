@@ -67,12 +67,12 @@ namespace Dev
             bool mine = false;
             if ((x >= 0) && (y >= 0)
                     && (x < boardSize) && (y < boardSize)
-                    && (revealedBoard[x, y] == '#'))
+                    && (revealedBoard[y, x] == '#'))
             {
-                char val = Convert.ToString(board[x, y])[0];
+                char val = Convert.ToString(board[y, x])[0];
                 if (val == '-')
                     val = 'X';
-                revealedBoard[x, y] = val;
+                revealedBoard[y, x] = val;
                 if (val == '0')
                 {
                     RevealPos(x - 1, y - 1);
@@ -106,6 +106,7 @@ namespace Dev
         }
         public void PrintRevealed()
         {
+            Console.ForegroundColor = ConsoleColor.White;
             for (int i = 0; i < boardSize; i++)
             {
                 // Print numbered row at top
@@ -120,6 +121,7 @@ namespace Dev
                 }
                 // Print numbers on left side
                 Console.Write("-" + i + "-");
+                // Print board with colors for the different numbers
                 for (int j = 0; j < boardSize; j++)
                 {
                     char fieldVal = revealedBoard[i, j];
@@ -166,10 +168,10 @@ namespace Dev
             while (true)
             {
                 b.PrintRevealed();
-                Console.WriteLine("Enter y to reveal: ");
-                int y = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("Enter x to reveal: ");
                 int x = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter y to reveal: ");
+                int y = Convert.ToInt32(Console.ReadLine());
                 bool mine = b.RevealPos(x, y);
                 if (mine)
                 {
@@ -185,7 +187,7 @@ namespace Dev
                         break;
                 }
             }
-            Console.Read();
+            for (; ; );
         }
     }
 }
