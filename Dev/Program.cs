@@ -9,9 +9,9 @@ namespace Dev
     class Board
     {
         Random rnd = new Random();
-        int boardSize;
-        int[,] board;
-        char[,] revealedBoard;
+        private int boardSize;
+        private int[,] board;
+        private char[,] revealedBoard;
         private void EmptyBoard()
         {
             for (int i = 0; i < boardSize; i++)
@@ -108,19 +108,51 @@ namespace Dev
         {
             for (int i = 0; i < boardSize; i++)
             {
+                // Print numbered row at top
                 if (i == 0)
                 {
+                    Console.Write("---");
                     for (int header_j=0; header_j < boardSize; header_j++)
                     {
                         Console.Write("-" + header_j + "-");
                     }
                     Console.WriteLine();
                 }
+                // Print numbers on left side
+                Console.Write("-" + i + "-");
                 for (int j = 0; j < boardSize; j++)
                 {
-                    Console.Write("[" + revealedBoard[i, j] + "]");
+                    char fieldVal = revealedBoard[i, j];
+                    Console.Write("[");
+                    switch(fieldVal)
+                    {
+                        case '#':
+                            Console.ForegroundColor = ConsoleColor.White;
+                            break;
+                        case '0':
+                            Console.ForegroundColor = ConsoleColor.DarkGray;
+                            break;
+                        case '1':
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            break;
+                        case '2':
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            break;
+                        case '3':
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            break;
+                        case '4':
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            break;
+                        default:
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            break;
+                    }
+                    Console.Write(revealedBoard[i, j]);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("]");
                 }
-                Console.WriteLine("-" + i + "-");
+                Console.WriteLine();
             }
         }
     }
